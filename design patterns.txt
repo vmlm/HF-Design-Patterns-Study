@@ -1,0 +1,36 @@
+Strategy pattern: In OOP, defines a family of algorithms, encapsulate each one, and makes them interchangeable. Strategy lets the alrgorithms vary independently from clients that use it.
+
+	[Eliminates code duplication and makes the algorithms more easily maintainable; extension is simplified, since new algorithms can be added to the family with little effort and old ones can be replaced, due to standardized interface; algorithm family can be abstracted and reused due to interface]
+
+	+ Use when a specific behavior is repeated within the code.
+	+ Use when you wish to reuse a specific behavior for a number of projects
+	+ Can be used to force "policy": Since all algorithms of the family share a parent class, they can all be forced to follow a specific behavior.
+
+
+Observer pattern: Defines a one-to-many dependency between objects so that when one object changes state, all of its dependents are notified and updated automatically.
+
+	The subject and observers define the one-to-many relationship. The observers are dependent on the subject such that when the subject's state changes, the observers get notified. Depending on the style of notification, the observer may also be updated with new values.
+
+	There are a few different ways to implement the Observer Pattern but most revolve around a class design that includes Subject and Observer interfaces.
+
+	Use when different behaviors are executed when there's a state change in a particular object. 
+
+Decorator Pattern: Attaches additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing when extending functionality.
+
+	-> Decorators have the same supertype as the objects they decorate.
+	-> You can use one or more decorators to wrap an object.
+	-> Given that the decorator has the same supertype as the object it decorates, we can pass around a decorated object in place of the original (wrapped) object.
+	-> The decorator adds its own behavior eitehr before andor after delegating to the object it decorates to do the rest of the job.
+	-> Objects can be decorated at any time, so we can decorate objects dynamically at runtime with as many decorators as we like.
+
+The Factory Method Pattern: Defines an interface for creating an object, but lets subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.
+
+As with every factory, the Factory Method Pattern gives us a way to encapsulate the instantiations of concrete tyes. Looking at the class diagram below, you can see that the abstract Creator gives you an interface with a method for creating objects, also known as the "factory method." Any other methods implemented in the abstract Creator are written to operate on products produced by the factory method. Only subclasses actually implement the factory method and create products.
+
+As in the official definition, you'll often hear developers say that the Factory Method lets subclasses decide which class to instantiate. They say "decides" not because the pattern allows subclasses themselves to decide at runtime, but because the creator class is written without knowledge of the actual products that will be created, which is decided purely by the choice of th subclass that is used.
+
+Abstract Factory: Provides an interface for creating families of related or dependent objects without specifying their concrete classes.
+
+An Abstract Factory gives us an interface for creating a family of products. By writing code that uses this interface, we decouple our code from the actual factory that creates the products. THat allows us to implement a variety of factories that produce products meant for different contexts -- such as different regions, different operating systems, or different look and feels.
+
+Because our code is decoupled from the actual products, we can substitute different factories to get different behaviors (like getting marinara instead of plum tomatoes)

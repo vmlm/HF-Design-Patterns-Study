@@ -1,0 +1,58 @@
+Duck Simulator:
+	Initial implementation creates a parent class "Duck" which all ducks inherit. (IS-A implementation).
+
+	In order to make the ducks fly, the fly() method was added to the parent class. This had the unanticipated side-effect of making rubber ducks fly. Only SOME ducks should fly. 
+
+		"What he thought was a great use of inheritance for the purpose of reuse hasn't turned out so well when it comes to maintenance."
+			-> By making a superclass "Duck" he was able to reuse the same code for every duck. At first he had no problem, since all the behavior he implemented was shared by all ducks.
+			-> However, he now has to add a kind of behavior that only SOME ducks should exhibit. The current implementation forces him to override the inherited behavior in those clases which should act differently than the norm. Essentially, he makes code which he can't easily reuse. In terms of maintenance, if the new behavior changes, he'll have to make changes to each class where he made the change. 
+
+	The first attempted solution is to make "Flyable" and "Quackable" Jave interfaces. The problem here is that java interfaces can't have any code, so he now has to paste the code to each duck implementation. This is actually worse than the first implementation. This is also an IS-A implementation.
+
+	The reason the third attempt works is that it separates the changing behavior (fly and quack) from the duck implementation, making an interface for each one. Then, each duck grabs a class that inherits the fly/quack interface but implements the function differently, depending on the behavior the class describes. 
+
+	How is this different from having a library of fly and quack methods and just calling the right method for each duck?
+
+
+	"The one constant in software development is change"
+
+
+Weather-O-Rama (keeping your objects in the know):
+
+	Publishers + Subscribers = Observer Pattern
+	
+	The power of loose-coupling:
+	----------------------------
+		When two objects are loosely coupled, they can interact, but have very little knowledge of each other. 
+
+		The observer pattern provides an object design where subjects and observers are loosely coupled. Why?
+			-> the only thing the subject knows about an observer is that it implements a certain interface (guranteeing it has the API the subject requires)
+			-> new observers can be added at any time.
+			-> The subject doesn't need to be modified to add new types of observers.
+			-> We can reuse subjects and observers independently of each other.
+			-> Changes to either the subject or an observer will not affect the other.
+
+
+Decorating objects
+-------------------
+
+Starbuzz coffee: 
+
+	First implementation: Initially, we have a beverage superclass that all beverages inherit and it contains a cost() abstract method. Each beverage implements the cost method, returning its cost.
+		Problem: Condiments and additives. Using this architecture you essentially need one class per combination of drink and condiments. The number of classes grows very quickly and this is very hard to maintain. The code is not very reusable.
+
+	Second implementation: The cost method is implemented in the super class, which now contain boolean variables indicating whether or not each condiment is used. Now each beverage class merely needs to indicate whether a condiment should be added or not, and add its base cost to the total cost calculated by the superclass. 
+		Problem: Multiple additions of the same condiment: Double espresso, double sugar, double fudge, etc. You would need a new boolean indicator for each "double," "triple," and "n-tuple" value of each condiment, depending on how many a customer is ever likely to want.
+			-> Price changes will force us to change the cost function (goes against dp#5).
+			-> Adding new condiments will force us to change the cost function and add a variable and a getter to the super class (also goes against dp#5).
+			-> If we add a new beverage for which some of the condiments don't apply, we allow weird behavior. (Whipped cream on an iced tea, for example).
+
+
+Baking with OO Goodness
+------------------------
+
+We're isolating the part of the code that calls the concrete classes, so we only ever deal with an interface. 
+
+Factory: Factories handle the details of object creation. Once we have a SimplePizzaFactory, our orderPizza() method just becomes a client of that object. Any time it needs a pizza it asks the pizza factory to make one. Gone are the days when the orderPizza() method needs to know about Greek versus Clam pizza. Now the orderPizza() method just cares that it gets a pizza, which implements the Pizza interface so that it can call prepare(), bake(), cut() and box().
+
+What varies among the regional PizzaStores is the style of pizzas they make -- New York Pizza has thin crust, Chicago Pizza has thuck, and so on -- and we are going to push all these variations into the createPizza() method and make it responsible for creating the right kind of pizza. The way we do this is by letting each subclass of PizzaStore define what the createPizza() method looks like. So, we will have a number of concrete subclasses of PizzaStore(), each with its own pizza variations, all fitting within the PizzaStore framework and still making use of the well-tuned orderPizza() method.
